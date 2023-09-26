@@ -2,7 +2,7 @@
 
 ```ts
 import { delay } from "https://deno.land/std@0.202.0/async/delay.ts";
-import fetchify from "https://deno.land/x/fetchify@0.0.2/mod.ts";
+import fetchify from "https://deno.land/x/fetchify@0.0.3/mod.ts";
 
 const endpoint = 'https://jsonplaceholder.typicode.com';
 
