@@ -1,28 +1,11 @@
 import { delay } from "../deps.ts";
-import { promiseWithTimeout } from "./timeout.ts";
-
-type FetchInput = URL | Request | string;
-
-interface ILimiterRequestInit extends RequestInit {
-  attempts?: number;
-  interval?: number;
-  timeout?: number;
-  unlimited?: boolean;
-}
-
-interface IRequestEntity {
-  promise: Promise<Response>;
-  init?: ILimiterRequestInit;
-  input: FetchInput;
-  resolve: (value: Response) => void;
-  reject: (value: Error) => void;
-  attempt: number;
-}
-
-interface IHTTPLimiterOptions {
-  rps: number; // requests per second
-  interval: number;
-}
+import { fetchWithTimeout } from "./fetchWithTimeout.ts";
+import {
+  FetchInput,
+  IHTTPLimiterOptions,
+  ILimiterRequestInit,
+  IRequestEntity,
+} from "./types.ts";
 
 export class HTTPLimiter {
   #options: IHTTPLimiterOptions = {
@@ -51,49 +34,39 @@ export class HTTPLimiter {
       }
 
       const entity = this.#queue.shift();
-      // Updated upstream
 
-      //
-      //Stashed changes
       if (entity) {
         this.#requestsPerIteration++;
 
-        console.log("fetch!");
-
-        const promise = fetch(entity.input, entity.init)
-          .then((response) => {
-            entity.resolve(response);
-          })
-          .catch((error) => {
-            if (
-              entity.init?.attempts !== undefined &&
-              entity.attempt < entity.init.attempts
-            ) {
-              this.#pushRequest(entity.input, entity.attempt + 1, entity.init);
-            }
-
-            console.log("reject1");
-            entity.reject(error);
-          })
-          .finally(() => {
-            this.#requestsPerIteration--;
-          });
-        // Updated upstream
-        //
         if (entity.init?.timeout && entity.init?.timeout > 0) {
-          promiseWithTimeout(promise, entity.init.timeout, () => {
-            if (
-              entity.init?.attempts !== undefined &&
-              entity.attempt < entity.init.attempts
-            ) {
-              this.#pushRequest(entity.input, entity.attempt + 1, entity.init);
-            }
+          fetchWithTimeout(entity.input, entity.init.timeout, entity.init)
+            .catch((error) => {
+              this.#requestsPerIteration--;
+              if (
+                entity.init?.attempts != undefined &&
+                entity.attempt < entity.init?.attempts
+              ) {
+                // this.#pushRequest(
+                //   entity.input,
+                //   entity.attempt + 1,
+                //   Object.assign({}, entity.init),
+                // );
+              }
 
-            this.#requestsPerIteration--;
-            // entity.reject(new Error("timeout!"));
-          });
+              entity.reject(error);
+            });
+        } else {
+          fetch(entity.input, entity.init)
+            .then((response) => {
+              entity.resolve(response);
+            })
+            .catch((error) => {
+              entity.reject(error);
+            })
+            .finally(() => {
+              this.#requestsPerIteration--;
+            });
         }
-        //Stashed changes
       }
 
       if (!entity && this.#requestsPerIteration == 0) {
@@ -121,14 +94,9 @@ export class HTTPLimiter {
     let promise = undefined as unknown as Promise<Response>;
 
     if (init.timeout) {
-      console.log("init timeout");
-      promise = promiseWithTimeout<Response>(
-        fetch(input, init),
-        init.timeout,
-        () => {
-          console.log("timeout!");
-        },
-      );
+      promise = fetchWithTimeout(input, init.timeout, init);
+    } else {
+      promise = fetch(input, init);
     }
 
     return promise;
@@ -152,8 +120,6 @@ export class HTTPLimiter {
       });
     });
 
-    // Updated upstream
-    //
     return promise;
   }
 
@@ -161,9 +127,8 @@ export class HTTPLimiter {
     input: FetchInput,
     init?: ILimiterRequestInit,
   ): Promise<Response> {
-    const promise = this.#pushRequest(input, 1, init);
+    const promise = this.#pushRequest(input, 0, init);
 
-    //Stashed changes
     if (!this.#loopIsWorking) {
       this.#loopIsWorking = !this.#loopIsWorking;
       this.#loop();
@@ -171,12 +136,10 @@ export class HTTPLimiter {
 
     return promise;
   }
-  // Updated upstream
-  //
+
   fetch(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return init && init.unlimited === true
       ? this.#unlimitedFetch(input, init)
       : this.#limitedFetch(input, init);
   }
-  //Stashed changes
 }
