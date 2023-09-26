@@ -1,5 +1,7 @@
 import { delay } from "../deps.ts";
 
+type FetchInput = URL | Request | string;
+
 interface IRequestEntity {
   promise: Promise<Response>;
   init?: RequestInit;
@@ -9,46 +11,80 @@ interface IRequestEntity {
 }
 
 interface IHTTPLimiterOptions {
+  rps: number; // requests per second
   interval: number;
 }
 
-type FetchInput = URL | Request | string;
-
 export class HTTPLimiter {
   #options: IHTTPLimiterOptions = {
+    rps: 1,
     interval: 0,
   };
 
   #queue: IRequestEntity[] = [];
+  #iterationStartTime = 0;
+  #requestsPerIteration = 0;
+  #loopIsWorking = false;
 
   constructor(options?: Partial<IHTTPLimiterOptions>) {
-    if (options) {
-      for (const [key, value] of Object.entries(options)) {
-        // @ts-ignore
-        if (key in this.#options) this.#options[key] = value;
-      }
+    if (options)
+    {
+      this.#options = { ...this.#options, ...options };
     }
   }
 
   async #loop() {
-    while (true) {
-      const entity = this.#queue.shift();
-      if (!entity) break;
+    this.#iterationStartTime = new Date().getTime();
 
-      try {
-        const response = await fetch(entity.input, entity.init);
-        entity.resolve(response);
-      } catch (error) {
-        entity.reject(error);
+    while (true)
+    {
+      if (this.#requestsPerIteration >= this.#options.rps)
+      {
+        await delay(this.#options.interval);
+        continue;
       }
 
-      await delay(this.#options.interval);
+      const entity = this.#queue.shift();
+
+      if (entity)
+      {
+        this.#requestsPerIteration++;
+        fetch(entity.input, entity.init)
+          .then((response) => {
+            entity.resolve(response);
+          })
+          .catch((error) => {
+            entity.reject(error);
+          })
+          .finally(() => {
+            this.#requestsPerIteration--;
+          });
+
+      }
+
+      if (!entity && this.#requestsPerIteration == 0)
+      {
+        this.#loopIsWorking = !this.#loopIsWorking;
+        return;
+      }
+
+      if (!entity && this.#iterationStartTime > 0)
+      {
+        await delay(0);
+      }
+
+      if (this.#requestsPerIteration == this.#options.rps)
+      {
+        const timeOffset = this.#iterationStartTime + 1000 -
+          new Date().getTime();
+        await delay(timeOffset);
+        this.#iterationStartTime = new Date().getTime();
+      }
     }
   }
 
   fetch(input: FetchInput, init?: RequestInit): Promise<Response> {
     let promise = undefined as unknown as Promise<Response>;
-
     promise = new Promise((resolve, reject) => {
       this.#queue.push({
         promise,
@@ -59,7 +95,11 @@ export class HTTPLimiter {
       });
     });
 
-    if (this.#queue.length === 1) this.#loop();
+    if (!this.#loopIsWorking)
+    {
+      this.#loopIsWorking = !this.#loopIsWorking
+      this.#loop();
+    }
 
     return promise;
   }
