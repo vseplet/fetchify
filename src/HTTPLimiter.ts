@@ -24,6 +24,7 @@ export class HTTPLimiter {
   #queue: IRequestEntity[] = [];
   #iterationStartTime = 0;
   #requestsPerIteration = 0;
+  #loopIsWorking = false;
 
   constructor(options?: Partial<IHTTPLimiterOptions>) {
     if (options)
@@ -37,29 +38,45 @@ export class HTTPLimiter {
 
     while (true)
     {
-      const entity = this.#queue.shift();
-      if (!entity) break;
       if (this.#requestsPerIteration >= this.#options.rps)
       {
         await delay(this.#options.interval);
         continue;
       }
 
-      this.#requestsPerIteration ++;
-      fetch(entity.input, entity.init)
-        .then(resp => {
-          entity.resolve(response);
-        })
-        .catch(err => {
-          entity.reject(error);
-        })
-        .finally(() => {
-          this.#requestsPerIteration --;
-        });
+      const entity = this.#queue.shift();
+
+      if (entity)
+      {
+        this.#requestsPerIteration++;
+        fetch(entity.input, entity.init)
+          .then((response) => {
+            entity.resolve(response);
+          })
+          .catch((error) => {
+            entity.reject(error);
+          })
+          .finally(() => {
+            this.#requestsPerIteration--;
+          });
+
+      }
+
+      if (!entity && this.#requestsPerIteration == 0)
+      {
+        this.#loopIsWorking = !this.#loopIsWorking;
+        return;
+      }
+
+      if (!entity && this.#iterationStartTime > 0)
+      {
+        await delay(0);
+      }
 
       if (this.#requestsPerIteration == this.#options.rps)
       {
-        const timeOffset = this.#iterationStartTime + 1000 - new Date().getTime();
+        const timeOffset = this.#iterationStartTime + 1000 -
+          new Date().getTime();
         await delay(timeOffset);
         this.#iterationStartTime = new Date().getTime();
       }
@@ -68,7 +85,6 @@ export class HTTPLimiter {
 
   fetch(input: FetchInput, init?: RequestInit): Promise<Response> {
     let promise = undefined as unknown as Promise<Response>;
-
     promise = new Promise((resolve, reject) => {
       this.#queue.push({
         promise,
@@ -79,7 +95,11 @@ export class HTTPLimiter {
       });
     });
 
-    if (this.#queue.length === 1) this.#loop();
+    if (!this.#loopIsWorking)
+    {
+      this.#loopIsWorking = !this.#loopIsWorking
+      this.#loop();
+    }
 
     return promise;
   }
