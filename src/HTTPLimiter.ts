@@ -27,8 +27,7 @@ export class HTTPLimiter {
   #loopIsWorking = false;
 
   constructor(options?: Partial<IHTTPLimiterOptions>) {
-    if (options)
-    {
+    if (options) {
       this.#options = { ...this.#options, ...options };
     }
   }
@@ -36,18 +35,15 @@ export class HTTPLimiter {
   async #loop() {
     this.#iterationStartTime = new Date().getTime();
 
-    while (true)
-    {
-      if (this.#requestsPerIteration >= this.#options.rps)
-      {
+    while (true) {
+      if (this.#requestsPerIteration >= this.#options.rps) {
         await delay(this.#options.interval);
         continue;
       }
 
       const entity = this.#queue.shift();
 
-      if (entity)
-      {
+      if (entity) {
         this.#requestsPerIteration++;
         fetch(entity.input, entity.init)
           .then((response) => {
@@ -59,22 +55,18 @@ export class HTTPLimiter {
           .finally(() => {
             this.#requestsPerIteration--;
           });
-
       }
 
-      if (!entity && this.#requestsPerIteration == 0)
-      {
+      if (!entity && this.#requestsPerIteration == 0) {
         this.#loopIsWorking = !this.#loopIsWorking;
         return;
       }
 
-      if (!entity && this.#iterationStartTime > 0)
-      {
+      if (!entity && this.#iterationStartTime > 0) {
         await delay(0);
       }
 
-      if (this.#requestsPerIteration == this.#options.rps)
-      {
+      if (this.#requestsPerIteration == this.#options.rps) {
         const timeOffset = this.#iterationStartTime + 1000 -
           new Date().getTime();
         await delay(timeOffset);
@@ -95,9 +87,8 @@ export class HTTPLimiter {
       });
     });
 
-    if (!this.#loopIsWorking)
-    {
-      this.#loopIsWorking = !this.#loopIsWorking
+    if (!this.#loopIsWorking) {
+      this.#loopIsWorking = !this.#loopIsWorking;
       this.#loop();
     }
 
