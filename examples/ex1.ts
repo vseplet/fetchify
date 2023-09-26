@@ -1,10 +1,12 @@
 import fetchify from "../mod.ts";
 
+const endpoint = "";
+
 const limit = new fetchify.HTTPLimiter({ rps: 3 });
 
-limit.fetch(``, {
-  // timeout: 100,
-  // attempts: 5,
+limit.fetch(`${endpoint}`, {
+  timeout: 100,
+  attempts: 5,
 }).then((data) => console.log(data))
   .catch((err) => {});
 
