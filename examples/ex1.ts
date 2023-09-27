@@ -1,8 +1,8 @@
-import fetchify from "../mod.ts";
+import { Limiter } from "../mod.ts";
 
 const endpoint = "https://jsonplaceholder.typicode.com/todos/1";
 
-const limiter = new fetchify.Limiter({ rps: 1 });
+const limiter = new Limiter({ rps: 1 });
 
 limiter.fetch(`${endpoint}`, {
   timeout: 50,

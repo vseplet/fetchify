@@ -4,11 +4,11 @@
 [![popularity](https://deno.land/badge/fetchify/popularity)](https://deno.land/x/fetchify)
 
 ```ts
-import fetchify from "https://deno.land/x/fetchify@0.1.3/mod.ts";
+import { Limiter } from "https://deno.land/x/fetchify@0.2.3/mod.ts";
 
 const endpoint = "https://jsonplaceholder.typicode.com";
 
-const limit = new fetchify.Limiter({
+const limit = new Limiter({
   rps: 3,
 });
 
