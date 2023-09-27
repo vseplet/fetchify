@@ -54,7 +54,7 @@ export class Limiter {
                 entity.reject(error);
               }
             }).finally(() => {
-              this.#requestsPerIteration--;
+              if (this.#requestsPerIteration > 0) this.#requestsPerIteration--;
             });
         } else {
           fetch(entity.input, entity.init)
@@ -73,7 +73,7 @@ export class Limiter {
               }
             })
             .finally(() => {
-              this.#requestsPerIteration--;
+              if (this.#requestsPerIteration > 0) this.#requestsPerIteration--;
             });
         }
       }
@@ -92,6 +92,7 @@ export class Limiter {
         const timeOffset = this.#iterationStartTime + 1000 -
           new Date().getTime();
         await delay(timeOffset);
+        this.#requestsPerIteration = 0;
         this.#iterationStartTime = new Date().getTime();
       }
     }
