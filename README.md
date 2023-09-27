@@ -1,7 +1,9 @@
 # fetchify
-
 [![deno.land/x/luminous](https://shield.deno.dev/x/fetchify)](https://deno.land/x/fetchify)
-[![popularity](https://deno.land/badge/fetchify/popularity)](https://deno.land/x/fetchify)
+[![popularity](https://deno.land/badge/fetchify/popularity)](https://deno.land/x/fetchify)<br>
+![npm version](https://img.shields.io/npm/v/@sevapp/fetchify)
+![npm downloads](https://img.shields.io/npm/dt/@sevapp/fetchify)<br>
+![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
 
 ```ts
 import { Limiter } from "https://deno.land/x/fetchify@0.2.3/mod.ts";
