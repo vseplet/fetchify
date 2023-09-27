@@ -6,7 +6,7 @@
 ![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
 
 ```ts
-import { Limiter } from "https://deno.land/x/fetchify@0.2.3/mod.ts";
+import { Limiter } from "https://deno.land/x/fetchify@0.2.4/mod.ts";
 
 const endpoint = "https://jsonplaceholder.typicode.com";
 
