@@ -1,12 +1,14 @@
 # fetchify
 
+[![deno.land/x/luminous](https://shield.deno.dev/x/fetchify)](https://deno.land/x/fetchify)
+[![popularity](https://deno.land/badge/fetchify/popularity)](https://deno.land/x/fetchify)
+
 ```ts
-import { delay } from "https://deno.land/std@0.202.0/async/delay.ts";
-import fetchify from "https://deno.land/x/fetchify@0.0.3/mod.ts";
+import fetchify from "https://deno.land/x/fetchify@0.1.3/mod.ts";
 
 const endpoint = "https://jsonplaceholder.typicode.com";
 
-const limit = new fetchify.HTTPLimiter({
+const limit = new fetchify.Limiter({
   rps: 3,
 });
 
