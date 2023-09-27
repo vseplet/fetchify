@@ -1,7 +1,7 @@
-import { HTTPLimiter } from "./src/HTTPLimiter.ts";
+import { Limiter } from "./src/Limiter.ts";
 
-export { HTTPLimiter };
+export { Limiter };
 
 export default {
-  HTTPLimiter,
+  Limiter,
 };

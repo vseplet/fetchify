@@ -8,7 +8,6 @@ export interface ILimiterRequestInit extends RequestInit {
 }
 
 export interface IRequestEntity {
-  promise: Promise<Response>;
   init?: ILimiterRequestInit;
   input: FetchInput;
   resolve: (value: Response) => void;
@@ -16,7 +15,7 @@ export interface IRequestEntity {
   attempt: number;
 }
 
-export interface IHTTPLimiterOptions {
+export interface ILimiterOptions {
   rps: number; // requests per second
   interval: number;
 }

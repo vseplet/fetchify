@@ -2,13 +2,13 @@ import { delay } from "../deps.ts";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
 import {
   FetchInput,
-  IHTTPLimiterOptions,
+  ILimiterOptions,
   ILimiterRequestInit,
   IRequestEntity,
 } from "./types.ts";
 
-export class HTTPLimiter {
-  #options: IHTTPLimiterOptions = {
+export class Limiter {
+  #options: ILimiterOptions = {
     rps: 1,
     interval: 0,
   };
@@ -18,7 +18,7 @@ export class HTTPLimiter {
   #requestsPerIteration = 0;
   #loopIsWorking = false;
 
-  constructor(options?: Partial<IHTTPLimiterOptions>) {
+  constructor(options?: Partial<ILimiterOptions>) {
     if (options) {
       this.#options = { ...this.#options, ...options };
     }
@@ -40,20 +40,21 @@ export class HTTPLimiter {
 
         if (entity.init?.timeout && entity.init?.timeout > 0) {
           fetchWithTimeout(entity.input, entity.init.timeout, entity.init)
+            .then((response) => {
+              entity.resolve(response);
+            })
             .catch((error) => {
-              this.#requestsPerIteration--;
               if (
                 entity.init?.attempts != undefined &&
                 entity.attempt < entity.init?.attempts
               ) {
-                // this.#pushRequest(
-                //   entity.input,
-                //   entity.attempt + 1,
-                //   Object.assign({}, entity.init),
-                // );
+                entity.attempt += 1;
+                this.#queue.push(entity);
+              } else {
+                entity.reject(error);
               }
-
-              entity.reject(error);
+            }).finally(() => {
+              this.#requestsPerIteration--;
             });
         } else {
           fetch(entity.input, entity.init)
@@ -61,7 +62,15 @@ export class HTTPLimiter {
               entity.resolve(response);
             })
             .catch((error) => {
-              entity.reject(error);
+              if (
+                entity.init?.attempts != undefined &&
+                entity.attempt < entity.init?.attempts
+              ) {
+                entity.attempt += 1;
+                this.#queue.push(entity);
+              } else {
+                entity.reject(error);
+              }
             })
             .finally(() => {
               this.#requestsPerIteration--;
@@ -69,8 +78,9 @@ export class HTTPLimiter {
         }
       }
 
-      if (!entity && this.#requestsPerIteration == 0) {
+      if (this.#queue.length == 0 && this.#requestsPerIteration == 0) {
         this.#loopIsWorking = !this.#loopIsWorking;
+        console.log("exit");
         return;
       }
 
@@ -102,32 +112,19 @@ export class HTTPLimiter {
     return promise;
   }
 
-  #pushRequest(
-    input: FetchInput,
-    attempt: number,
-    init?: ILimiterRequestInit,
-  ): Promise<Response> {
-    let promise = undefined as unknown as Promise<Response>;
-
-    promise = new Promise((resolve, reject) => {
-      this.#queue.push({
-        promise,
-        input,
-        init,
-        resolve,
-        reject,
-        attempt,
-      });
-    });
-
-    return promise;
-  }
-
   #limitedFetch(
     input: FetchInput,
     init?: ILimiterRequestInit,
   ): Promise<Response> {
-    const promise = this.#pushRequest(input, 0, init);
+    const promise = new Promise<Response>((resolve, reject) => {
+      this.#queue.push({
+        input,
+        init,
+        resolve,
+        reject,
+        attempt: 0,
+      });
+    });
 
     if (!this.#loopIsWorking) {
       this.#loopIsWorking = !this.#loopIsWorking;
