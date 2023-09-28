@@ -7,18 +7,24 @@
 ![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
 
 ```ts
-import { Limiter } from "https://deno.land/x/fetchify@0.2.4/mod.ts";
+import fetchify from "https://deno.land/x/fetchify/mod.ts";
 
-const endpoint = "https://jsonplaceholder.typicode.com";
-
-const limit = new Limiter({
-  rps: 3,
+const jph = fetchify.create({
+  limiter: {
+    rps: 10,
+    interval: 10,
+  },
+  baseURL: "https://jsonplaceholder.typicode.com",
+  headers: {
+    "hello": "world",
+  },
 });
 
-for (let i = 20; i--;) {
-  console.log(`push to queue ${i}`);
-  limit.fetch(`${endpoint}/posts/${i}`).finally(() => {
-    console.log(`finally ${i}`);
-  });
+for (let i = 30; i--;) {
+  console.log(`send ${i}`);
+  jph.get(`/posts/${i}`).then((data) => console.log(`${i} ${data.status}`))
+    .catch((err) => console.log(`${i} ${err}`))
+    .finally(() => {
+    });
 }
 ```
