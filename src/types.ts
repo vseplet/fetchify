@@ -17,5 +17,11 @@ export interface IRequestEntity {
 
 export interface ILimiterOptions {
   rps: number; // requests per second
-  interval: number;
+  interval?: number;
+}
+
+export interface IFetchifyConfig {
+  limiter?: ILimiterOptions;
+  baseURL?: FetchInput;
+  headers?: HeadersInit;
 }

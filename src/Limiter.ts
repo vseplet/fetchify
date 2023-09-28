@@ -29,7 +29,7 @@ export class Limiter {
 
     while (true) {
       if (this.#requestsPerIteration >= this.#options.rps) {
-        await delay(this.#options.interval);
+        await delay(this.#options.interval || 0);
         continue;
       }
 
@@ -54,7 +54,7 @@ export class Limiter {
                 entity.reject(error);
               }
             }).finally(() => {
-              this.#requestsPerIteration--;
+              if (this.#requestsPerIteration > 0) this.#requestsPerIteration--;
             });
         } else {
           fetch(entity.input, entity.init)
@@ -73,14 +73,13 @@ export class Limiter {
               }
             })
             .finally(() => {
-              this.#requestsPerIteration--;
+              if (this.#requestsPerIteration > 0) this.#requestsPerIteration--;
             });
         }
       }
 
       if (this.#queue.length == 0 && this.#requestsPerIteration == 0) {
         this.#loopIsWorking = !this.#loopIsWorking;
-        console.log("exit");
         return;
       }
 
@@ -92,18 +91,19 @@ export class Limiter {
         const timeOffset = this.#iterationStartTime + 1000 -
           new Date().getTime();
         await delay(timeOffset);
+        this.#requestsPerIteration = 0;
         this.#iterationStartTime = new Date().getTime();
       }
     }
   }
 
-  #unlimitedFetch(
+  static fetch(
     input: FetchInput,
-    init: ILimiterRequestInit,
+    init?: ILimiterRequestInit,
   ): Promise<Response> {
     let promise = undefined as unknown as Promise<Response>;
 
-    if (init.timeout) {
+    if (init && init.timeout) {
       promise = fetchWithTimeout(input, init.timeout, init);
     } else {
       promise = fetch(input, init);
@@ -136,7 +136,7 @@ export class Limiter {
 
   fetch(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return init && init.unlimited === true
-      ? this.#unlimitedFetch(input, init)
+      ? Limiter.fetch(input, init)
       : this.#limitedFetch(input, init);
   }
 }
