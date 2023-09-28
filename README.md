@@ -6,26 +6,27 @@
 ![npm downloads](https://img.shields.io/npm/dt/@sevapp/fetchify)<br>
 ![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
 
-### Deno:
-From [deno.land/x](https://deno.land/x/fetchify):
-```ts
-import fetchify from "https://deno.land/x/fetchify/mod.ts";
-```
-Or [esm.sh](esm.sh):
-```ts
-import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.5/mod.ts"
-```
-### Node.JS:
-Install from [npm](https://www.npmjs.com/package/@sevapp/fetchify):
-```bash
-npm i --save @sevapp/fetchify
-``` 
-And import:
-```ts
-import fetchify from "fetchify";
-```
+## Import
 
----
+#### Deno:
+> From [deno.land/x](https://deno.land/x/fetchify):
+> ```ts
+> import fetchify from "https://deno.land/x/fetchify@0.2.5/mod.ts";
+> ```
+> Or [esm.sh](esm.sh):
+> ```ts
+> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.5/mod.ts"
+> ```
+
+#### Node.JS:
+> Install from [npm](https://www.npmjs.com/package/@sevapp/fetchify):
+> ```bash
+> npm i --save @sevapp/fetchify
+> ``` 
+> And import:
+> ```ts
+> import fetchify from "fetchify";
+> ```
 
 ## Usage:
 ```ts
