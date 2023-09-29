@@ -14,11 +14,11 @@ This package is designed to make the process of interacting with various APIs th
 #### Deno:
 > From [deno.land/x](https://deno.land/x/fetchify):
 > ```ts
-> import fetchify from "https://deno.land/x/fetchify@0.2.5/mod.ts";
+> import fetchify from "https://deno.land/x/fetchify@0.2.6/mod.ts";
 > ```
 > Or [esm.sh](esm.sh):
 > ```ts
-> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.5/mod.ts"
+> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.6/mod.ts"
 > ```
 
 #### Node.JS:
