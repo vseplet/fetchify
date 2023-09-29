@@ -24,7 +24,16 @@ await build({
     bugs: {
       url: "https://github.com/sevapp/fetchify/issues",
     },
-    keywords: ["http", "fetch", "axios", "request", "client", "limit-rate"],
+    keywords: [
+      "http",
+      "fetch",
+      "axios",
+      "request",
+      "client",
+      "rate-limit",
+      "ajax",
+      "promise",
+    ],
     author: "Vsevolod Pletnev (sevapp)",
   },
 

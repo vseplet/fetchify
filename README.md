@@ -77,9 +77,9 @@ const jph = fetchify.create({
   limiter: {
     // Number of requests per second
     rps: 3,
-    // You can handle the occurrence of a 429 error 
+    // You can handle the occurrence of a 429 error
     // and return the time in ms that the request loop should delay
-    "429": (response) => 1000
+    "429": (response) => 1000,
   },
   baseURL: "https://jsonplaceholder.typicode.com",
   headers: {
@@ -97,7 +97,9 @@ for (let i = 30; i--;) {
 }
 ```
 
-Yes, all methods comply with the **fetch** interface but also extend it with additional options, for example:
+Yes, all methods comply with the **fetch** interface but also extend it with
+additional options, for example:
+
 ```ts
 await jph.get(`/posts/10`, {
   // Number of attempts
@@ -107,7 +109,9 @@ await jph.get(`/posts/10`, {
 });
 ```
 
-If you need to make a request to the configured **baseURL** but not through the request queue, you can add the flag:
+If you need to make a request to the configured **baseURL** but not through the
+request queue, you can add the flag:
+
 ```ts
 await jph.get(`/posts/10`, { unlimited: true });
 ```
