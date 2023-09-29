@@ -97,7 +97,7 @@ for (let i = 30; i--;) {
 }
 ```
 
-Да, все методы сооветствуют интерфейсу fetch, но и расширяют его дополнительными опциями, например:
+Yes, all methods comply with the **fetch** interface but also extend it with additional options, for example:
 ```ts
 await jph.get(`/posts/10`, {
   // Number of attempts
@@ -106,7 +106,8 @@ await jph.get(`/posts/10`, {
   timeout: 1000
 });
 ```
-Если вам надо сделать запрос к настроенному выше baseURL, но не через очередь запросов, вы можете добавить флаг:
+
+If you need to make a request to the configured **baseURL** but not through the request queue, you can add the flag:
 ```ts
 await jph.get(`/posts/10`, { unlimited: true });
 ```
