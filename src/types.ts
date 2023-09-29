@@ -15,9 +15,11 @@ export interface IRequestEntity {
   attempt: number;
 }
 
+export type RateLimitExceededHandler = (response: Response) => number;
+
 export interface ILimiterOptions {
   rps: number; // requests per second
-  interval?: number;
+  429?: RateLimitExceededHandler;
 }
 
 export interface IFetchifyConfig {
