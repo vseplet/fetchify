@@ -116,6 +116,66 @@ request queue, you can add the flag:
 await jph.get(`/posts/10`, { unlimited: true });
 ```
 
+If you need to, you can try to parse JSON and validate it using Zod:
+```ts
+import fetchify, { jsonZ, z } from "fetchify";
+
+const schema = z.object({
+  id: z.string(), // there should actually be a z.number() here!
+  title: z.string(),
+  body: z.string(),
+  userId: z.number(),
+});
+
+const { data, response } = await jsonZ(
+  fetchify("https://jsonplaceholder.typicode.com/posts/1"),
+  schema,
+);
+```
+
+And get the error:
+```
+error: Uncaught (in promise) ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "number",
+    "path": [
+      "id"
+    ],
+    "message": "Expected string, received number"
+  }
+]
+```
+
+Или с помощью ValiBot:
+```ts
+import fetchify, { jsonV, v } from "fetchify";
+
+const schema = v.object({
+  id: v.number(), // v.number() is valid
+  title: v.string(),
+  body: v.string(),
+  userId: v.number(),
+});
+
+const { data, response } = await jsonV(
+  fetchify("https://jsonplaceholder.typicode.com/posts/1"),
+  schema,
+);
+
+console.log(data);
+// {
+//   id: 1,
+//   title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+//   body: "quia et suscipit\n" +
+//     "suscipit recusandae consequuntur expedita et cum\n" +
+//     "reprehenderit molestiae ut ut quas"... 58 more characters,
+//   userId: 1
+// }
+
+```
+
 ## LICENCE
 
 [LGPL-2.1](https://github.com/sevapp/fetchify/blob/main/LICENSE)
