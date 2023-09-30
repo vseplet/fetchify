@@ -10,6 +10,16 @@ This package is designed to make the process of interacting with various APIs
 that have strict limitations more convenient and careful. For example, this
 could be APIs like Notion or Telegram, which have stringent limits.
 
+- [Import](#import)
+  - [deno](#deno)
+  - [nodejs](#nodejs)
+- [Usage](#usage)
+  - [Timeout](#timeout)
+  - [Rate-limit](#rate-limit)
+  - [Retries](#retries)
+  - [Parsing and validation](#parsing-and-validation)
+- [LICENCE](#licence)
+
 ## 👋 👋 ATTENTION!
 
 > This package is under development and will be frequently updated. The author
@@ -23,13 +33,13 @@ could be APIs like Notion or Telegram, which have stringent limits.
 > From [deno.land/x](https://deno.land/x/fetchify):
 >
 > ```ts
-> import fetchify from "https://deno.land/x/fetchify@0.2.7/mod.ts";
+> import fetchify from "https://deno.land/x/fetchify@0.2.8/mod.ts";
 > ```
 >
 > Or [esm.sh](esm.sh):
 >
 > ```ts
-> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.7/mod.ts";
+> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.8/mod.ts";
 > ```
 
 #### Node.JS:
@@ -55,6 +65,7 @@ const json = await (await fetchify("https://catfact.ninja/fact")).json();
 console.log(json);
 ```
 
+### Timeout
 This function has a similar interface to the classic **fetch** but extends it
 with additional options, for example:
 
@@ -69,6 +80,7 @@ const json = await (await fetchify(
 console.log(json);
 ```
 
+### Rate-limit
 But you can also create an instance with a set base URL and rate-limiting
 constraints:
 
@@ -97,6 +109,7 @@ for (let i = 30; i--;) {
 }
 ```
 
+### Retries
 Yes, all methods comply with the **fetch** interface but also extend it with
 additional options, for example:
 
@@ -116,7 +129,8 @@ request queue, you can add the flag:
 await jph.get(`/posts/10`, { unlimited: true });
 ```
 
-If you need to, you can try to parse JSON and validate it using Zod:
+### Parsing and validation
+If you need to, you can try to parse JSON and validate it using [Zod](https://github.com/colinhacks/zod):
 ```ts
 import fetchify, { jsonZ, z } from "fetchify";
 
@@ -148,7 +162,7 @@ error: Uncaught (in promise) ZodError: [
 ]
 ```
 
-Или с помощью ValiBot:
+Or using [ValiBot](https://github.com/fabian-hiller/valibot):
 ```ts
 import fetchify, { jsonV, v } from "fetchify";
 
