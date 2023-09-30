@@ -6,7 +6,7 @@
 ![npm downloads](https://img.shields.io/npm/dt/@sevapp/fetchify)
 ![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
 
-[DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
+✅ [DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
 
 This package is designed to make the process of interacting with various APIs
 that have strict limitations more convenient and careful. For example, this
