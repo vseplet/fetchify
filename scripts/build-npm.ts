@@ -6,7 +6,6 @@ await build({
   entryPoints: ["./mod.ts"],
   outDir: "./npm",
   shims: {
-    // see JS docs for overview and more options
     deno: true,
     undici: true,
   },
@@ -33,12 +32,13 @@ await build({
       "rate-limit",
       "ajax",
       "promise",
+      "validation",
+      "json",
     ],
     author: "Vsevolod Pletnev (sevapp)",
   },
 
   postBuild() {
-    // steps to run after building and before running the tests
     Deno.copyFileSync("LICENSE", "npm/LICENSE");
     Deno.copyFileSync("README.md", "npm/README.md");
   },

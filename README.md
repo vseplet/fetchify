@@ -12,21 +12,28 @@ This package is designed to make the process of interacting with various APIs
 that have strict limitations more convenient and careful. For example, this
 could be APIs like Notion or Telegram, which have stringent limits.
 
-- [Import](#import)
-  - [deno](#deno)
-  - [nodejs](#nodejs)
-- [Usage](#usage)
-  - [Timeout](#timeout)
-  - [Rate-limit](#rate-limit)
-  - [Retries](#retries)
-  - [Parsing and validation](#parsing-and-validation)
-- [LICENCE](#licence)
+- [fetchify](#fetchify)
+  - [👋 👋 ATTENTION!](#--attention)
+  - [Examples](#examples)
+  - [Import](#import)
+    - [Deno:](#deno)
+    - [Node.JS:](#nodejs)
+  - [Usage:](#usage)
+    - [Timeout](#timeout)
+    - [Rate-limit](#rate-limit)
+    - [Retries](#retries)
+    - [Parsing and validation](#parsing-and-validation)
+  - [LICENCE](#licence)
 
 ## 👋 👋 ATTENTION!
 
 > This package is under development and will be frequently updated. The author
 > would appreciate any help, advice, and pull requests! Thank you for your
 > understanding 😊
+
+## Examples
+
+1. [Example of implementing a mechanism for mass messaging in Telegram, taking into account compliance with all limits and the ability to resume after a failure](https://gist.github.com/sevapp/876e76399c2f88129f5259e17afe9582).
 
 ## Import
 
@@ -68,6 +75,7 @@ console.log(json);
 ```
 
 ### Timeout
+
 This function has a similar interface to the classic **fetch** but extends it
 with additional options, for example:
 
@@ -83,6 +91,7 @@ console.log(json);
 ```
 
 ### Rate-limit
+
 But you can also create an instance with a set base URL and rate-limiting
 constraints:
 
@@ -112,6 +121,7 @@ for (let i = 30; i--;) {
 ```
 
 ### Retries
+
 Yes, all methods comply with the **fetch** interface but also extend it with
 additional options, for example:
 
@@ -132,7 +142,10 @@ await jph.get(`/posts/10`, { unlimited: true });
 ```
 
 ### Parsing and validation
-If you need to, you can try to parse JSON and validate it using [Zod](https://github.com/colinhacks/zod):
+
+If you need to, you can try to parse JSON and validate it using
+[Zod](https://github.com/colinhacks/zod):
+
 ```ts
 import fetchify, { jsonZ, z } from "fetchify";
 
@@ -150,6 +163,7 @@ const { data, response } = await jsonZ(
 ```
 
 And get the error:
+
 ```
 error: Uncaught (in promise) ZodError: [
   {
@@ -165,6 +179,7 @@ error: Uncaught (in promise) ZodError: [
 ```
 
 Or using [ValiBot](https://github.com/fabian-hiller/valibot):
+
 ```ts
 import fetchify, { jsonV, v } from "fetchify";
 
@@ -189,7 +204,6 @@ console.log(data);
 //     "reprehenderit molestiae ut ut quas"... 58 more characters,
 //   userId: 1
 // }
-
 ```
 
 ## LICENCE
