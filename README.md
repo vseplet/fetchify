@@ -33,7 +33,8 @@ could be APIs like Notion or Telegram, which have stringent limits.
 
 ## Examples
 
-1. [Example of implementing a mechanism for mass messaging in Telegram, taking into account compliance with all limits and the ability to resume after a failure](https://gist.github.com/sevapp/876e76399c2f88129f5259e17afe9582).
+1. Gist [deno telegram mailer](https://gist.github.com/sevapp/876e76399c2f88129f5259e17afe9582) + article [💌 Safe message sending script in Telegram with just 49 lines of code? Really?](https://dev.to/sevapp/safe-message-sending-script-in-telegram-with-just-49-lines-of-code-really-18jf)
+   
 
 ## Import
 
