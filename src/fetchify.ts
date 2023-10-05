@@ -1,5 +1,5 @@
 import { Limiter } from "../mod.ts";
-import { combineURL } from "./helpers.ts";
+import { combineURL, getUrlFromStringOrRequest } from "./helpers.ts";
 import { FetchInput, IFetchifyConfig, ILimiterRequestInit } from "./types.ts";
 
 export const fetchify = (input: FetchInput, init?: ILimiterRequestInit) => {
@@ -21,7 +21,9 @@ export class Fetchify {
 
   #request(method: string, input: FetchInput, init?: ILimiterRequestInit) {
     return this.#limiter.fetch(
-      this.#config.baseURL ? combineURL(input, this.#config.baseURL) : input,
+      this.#config.baseURL
+        ? combineURL(input, this.#config.baseURL)
+        : getUrlFromStringOrRequest(input),
       {
         method,
         ...init,

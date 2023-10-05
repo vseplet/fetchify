@@ -1,25 +1,42 @@
 export type FetchInput = URL | Request | string;
 
+export interface IQueryParams {
+  [name: string]: string | number | boolean;
+}
+
 export interface ILimiterRequestInit extends RequestInit {
   attempts?: number;
   interval?: number;
   timeout?: number;
   unlimited?: boolean;
+  params?: IQueryParams;
 }
+
+export type ResolveCallback = (value: Response) => void;
+export type RejectCallback = (value: Error) => void;
 
 export interface IRequestEntity {
   init?: ILimiterRequestInit;
   input: FetchInput;
-  resolve: (value: Response) => void;
-  reject: (value: Error) => void;
+  resolve: ResolveCallback;
+  reject: RejectCallback;
   attempt: number;
 }
 
 export type RateLimitExceededHandler = (response: Response) => number;
 
+export type StatusHandler = (
+  response: Response,
+  resolve: ResolveCallback,
+  reject: RejectCallback,
+) => void;
+
 export interface ILimiterOptions {
   rps: number; // requests per second
-  429?: RateLimitExceededHandler;
+  rt?: RateLimitExceededHandler;
+  status?: {
+    [code: number]: StatusHandler;
+  };
 }
 
 export interface IFetchifyConfig {

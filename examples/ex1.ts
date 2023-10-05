@@ -6,7 +6,7 @@ const endpoint = "https://jsonplaceholder.typicode.com/asdasd/1";
 const limiter = new Limiter({
   rps: 50,
 
-  "429": (response) => {
+  rt: (response) => {
     return response.headers.get("retry_after") as unknown as number * 1000;
   },
 });

@@ -8,7 +8,12 @@ const schema = v.object({
 });
 
 const { data, response } = await jsonV(
-  fetchify("https://jsonplaceholder.typicode.com/posts/1"),
+  fetchify("https://jsonplaceholder.typicode.com/posts/1", {
+    params: {
+      "g": 10,
+      "d": true,
+    },
+  }),
   schema,
 );
 

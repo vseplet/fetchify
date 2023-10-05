@@ -1,5 +1,6 @@
 import { delay } from "../deps.ts";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
+import { getUrlFromStringOrRequest, objectToQueryParams } from "./helpers.ts";
 import {
   FetchInput,
   ILimiterOptions,
@@ -26,9 +27,18 @@ export class Limiter {
   }
 
   #fetchThen(entity: IRequestEntity, response: Response) {
-    entity.resolve(response);
-    if (this.#options["429"] && response.status == 429) {
-      this.#timeoutAfter429 = this.#options["429"](response);
+    if (this.#options.rt && response.status == 429) {
+      this.#timeoutAfter429 = this.#options.rt(response);
+    }
+
+    if (this.#options.status && this.#options.status[response.status]) {
+      this.#options.status[response.status](
+        response,
+        entity.resolve,
+        entity.reject,
+      );
+    } else {
+      entity.resolve(response);
     }
   }
 
@@ -103,11 +113,13 @@ export class Limiter {
     init?: ILimiterRequestInit,
   ): Promise<Response> {
     let promise = undefined as unknown as Promise<Response>;
+    const url = new URL(getUrlFromStringOrRequest(input));
+    if (init?.params) url.search = objectToQueryParams(init.params);
 
     if (init && init.timeout) {
-      promise = fetchWithTimeout(input, init.timeout, init);
+      promise = fetchWithTimeout(url, init.timeout, init);
     } else {
-      promise = fetch(input, init);
+      promise = fetch(url, init);
     }
 
     return promise;
@@ -117,9 +129,12 @@ export class Limiter {
     input: FetchInput,
     init?: ILimiterRequestInit,
   ): Promise<Response> {
+    const url = new URL(getUrlFromStringOrRequest(input));
+    if (init?.params) url.search = objectToQueryParams(init.params);
+
     const promise = new Promise<Response>((resolve, reject) => {
       this.#queue.push({
-        input,
+        input: url,
         init,
         resolve,
         reject,

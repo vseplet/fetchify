@@ -4,7 +4,7 @@ import fetchify from "../mod.ts";
 const api = fetchify.create({
   limiter: {
     rps: 1,
-    "429": () => 1000,
+    rt: () => 1000,
   },
 
   baseURL: "https://httpbin.org",

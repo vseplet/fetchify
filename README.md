@@ -34,8 +34,10 @@ could be APIs like Notion or Telegram, which have stringent limits.
 
 ## Examples
 
-1. Gist [deno telegram mailer](https://gist.github.com/sevapp/876e76399c2f88129f5259e17afe9582) + article [💌 Safe message sending script in Telegram with just 49 lines of code? Really?](https://dev.to/sevapp/safe-message-sending-script-in-telegram-with-just-49-lines-of-code-really-18jf)
-   
+1. Gist
+   [deno telegram mailer](https://gist.github.com/sevapp/876e76399c2f88129f5259e17afe9582) +
+   article
+   [💌 Safe message sending script in Telegram with just 49 lines of code? Really?](https://dev.to/sevapp/safe-message-sending-script-in-telegram-with-just-49-lines-of-code-really-18jf)
 
 ## Import
 
@@ -44,13 +46,13 @@ could be APIs like Notion or Telegram, which have stringent limits.
 > From [deno.land/x](https://deno.land/x/fetchify):
 >
 > ```ts
-> import fetchify from "https://deno.land/x/fetchify@0.2.8/mod.ts";
+> import fetchify from "https://deno.land/x/fetchify@0.3.8/mod.ts";
 > ```
 >
 > Or [esm.sh](esm.sh):
 >
 > ```ts
-> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.2.8/mod.ts";
+> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.3.8/mod.ts";
 > ```
 
 #### Node.JS:
@@ -104,7 +106,7 @@ const jph = fetchify.create({
     rps: 3,
     // You can handle the occurrence of a 429 error
     // and return the time in ms that the request loop should delay
-    "429": (response) => 1000,
+    rt: (response) => 1000,
   },
   baseURL: "https://jsonplaceholder.typicode.com",
   headers: {
@@ -210,12 +212,12 @@ console.log(data);
 
 ## DONATE
 
-🫶 You can support me and my work in the following ways: <br>
-**TON**: ```EQBiaSPuG33CuKXHClwsVvA-SazmLmtiTfXV7dQnqJdIlGgI```<br>
-**USDT (TRC 20)** ```(TRC20): TGPWzEiQjMYHjZx4fb3SDSumiSXdmjE4ZR```<br>
-**BTC**: ```bc1qq37svf4h8sg5qjsv99n9jf3r45dtd5yf5mdpc5```<br>
-**ETH**: ```0xAdc58F26cA3dCc01256cF1BeF6221f4bcaa3c660```<br>
-**SOL**: ```BckFFoxZw36ABbNS8Fc66LCdzJhu4ZwQANRdq49XmqKw```<br>
+🫶 You can support me and my work in the following ways: <br> **TON**:
+`EQBiaSPuG33CuKXHClwsVvA-SazmLmtiTfXV7dQnqJdIlGgI`<br> **USDT (TRC 20)**
+`(TRC20): TGPWzEiQjMYHjZx4fb3SDSumiSXdmjE4ZR`<br> **BTC**:
+`bc1qq37svf4h8sg5qjsv99n9jf3r45dtd5yf5mdpc5`<br> **ETH**:
+`0xAdc58F26cA3dCc01256cF1BeF6221f4bcaa3c660`<br> **SOL**:
+`BckFFoxZw36ABbNS8Fc66LCdzJhu4ZwQANRdq49XmqKw`<br>
 
 ## LICENCE
 
