@@ -46,13 +46,13 @@ could be APIs like Notion or Telegram, which have stringent limits.
 > From [deno.land/x](https://deno.land/x/fetchify):
 >
 > ```ts
-> import fetchify from "https://deno.land/x/fetchify@0.3.8/mod.ts";
+> import fetchify from "https://deno.land/x/fetchify@0.3.10/mod.ts";
 > ```
 >
 > Or [esm.sh](esm.sh):
 >
 > ```ts
-> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.3.8/mod.ts";
+> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.3.10/mod.ts";
 > ```
 
 #### Node.JS:
