@@ -29,6 +29,7 @@ export type StatusHandler = (
   response: Response,
   resolve: ResolveCallback,
   reject: RejectCallback,
+  retry: () => void,
 ) => void;
 
 export interface ILimiterOptions {

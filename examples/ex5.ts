@@ -2,10 +2,10 @@ import fetchify from "../mod.ts";
 
 const api = fetchify.create({
   limiter: {
-    rps: 100,
+    rps: 1,
     status: {
-      200: (_response, _resolve, reject) => {
-        reject(new Error("My Error!"));
+      404: (response, resolve, reject, retry) => {
+        retry();
       },
     },
   },
@@ -13,6 +13,6 @@ const api = fetchify.create({
   baseURL: "https://jsonplaceholder.typicode.com/",
 });
 
-const res = await api.get("posts/1");
+const res = await api.get("postsds/1", { attempts: 10 });
 
 console.log(res);

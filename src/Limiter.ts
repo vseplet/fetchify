@@ -36,6 +36,17 @@ export class Limiter {
         response,
         entity.resolve,
         entity.reject,
+        () => {
+          if (
+            entity.init?.attempts != undefined &&
+            entity.attempt < entity.init?.attempts
+          ) {
+            entity.attempt += 1;
+            this.#queue.push(entity);
+          } else {
+            entity.reject(new Error("max attempts!"));
+          }
+        },
       );
     } else {
       entity.resolve(response);
@@ -76,6 +87,7 @@ export class Limiter {
 
       if (entity) {
         this.#requestsPerIteration++;
+        console.log(entity.input.toString());
         if (entity.init?.timeout && entity.init?.timeout > 0) {
           fetchWithTimeout(entity.input, entity.init.timeout, entity.init)
             .then((response) => this.#fetchThen(entity, response))
@@ -138,7 +150,7 @@ export class Limiter {
         init,
         resolve,
         reject,
-        attempt: 0,
+        attempt: 1,
       });
     });
 
