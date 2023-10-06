@@ -53,6 +53,6 @@ export class Fetchify {
   }
 
   patch(input: FetchInput, init?: ILimiterRequestInit) {
-    return this.#request("PATH", input, init);
+    return this.#request("PATCH", input, init);
   }
 }
