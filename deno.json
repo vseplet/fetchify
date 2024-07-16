@@ -1,4 +1,16 @@
 {
+  "name": "@vseplet/fetchify",
+  "version": "0.3.12",
+  "workflows": {
+    "UpdateSemverDeployJsr": {
+      "versionsFilePath": "./source/versions.ts"
+    }
+  },
+
+  "exports": {
+    ".": "./mod.ts"
+  },
+
   "lock": false,
   "tasks": {
     "build-npm": "deno run --allow-all ./scripts/build-npm.ts"
