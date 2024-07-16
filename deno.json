@@ -11,6 +11,7 @@
   },
   "lock": false,
   "tasks": {
-    "build-npm": "deno run --allow-all ./scripts/build-npm.ts"
+    "build-npm": "deno run --allow-all ./scripts/build-npm.ts",
+    "pub-dry": "deno publish --dry-run --allow-slow-types"
   }
 }

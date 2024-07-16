@@ -1,4 +1,5 @@
-import { v, z } from "../deps.ts";
+// deno-lint-ignore-file no-explicit-any
+import { v, type z } from "../deps.ts";
 
 export const text = async (promise: Promise<Response>) => {
   const response = await promise;
@@ -13,7 +14,7 @@ export const json = async <T>(promise: Promise<Response>, schema?: T) => {
   return { data, response };
 };
 
-export const jsonV = async <T extends v.BaseSchema>(
+export const jsonV = async <T extends v.BaseSchema<any, any, any>>(
   promise: Promise<Response>,
   schema: T,
 ) => {
