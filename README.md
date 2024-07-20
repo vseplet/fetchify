@@ -1,5 +1,6 @@
 # fetchify
 [![JSR](https://jsr.io/badges/@vseplet/fetchify)](https://jsr.io/@vseplet/fetchify)
+
 ✅ [DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
 
 This package is designed to make the process of interacting with various APIs
@@ -18,7 +19,6 @@ could be APIs like Notion or Telegram, which have stringent limits.
     - [Retries](#retries)
     - [Parsing and validation](#parsing-and-validation)
   - [DONATE](#donate)
-  - [LICENCE](#licence)
 
 ## 👋 👋 ATTENTION!
 
@@ -36,32 +36,17 @@ could be APIs like Notion or Telegram, which have stringent limits.
 ## Import
 
 #### Deno:
-
-> From [deno.land/x](https://deno.land/x/fetchify):
->
-> ```ts
-> import fetchify from "https://deno.land/x/fetchify@0.3.11/mod.ts";
-> ```
->
-> Or [esm.sh](esm.sh):
->
-> ```ts
-> import fetchify from "https://esm.sh/gh/sevapp/fetchify@0.3.11/mod.ts";
-> ```
-
+```bash
+deno add @vseplet/fetchify
+```
 #### Node.JS:
-
-> Install from [npm](https://www.npmjs.com/package/@sevapp/fetchify):
->
-> ```bash
-> npm i --save @sevapp/fetchify
-> ```
->
-> And import:
->
-> ```ts
-> import fetchify from "fetchify";
-> ```
+```bash
+npx jsr add @vseplet/fetchify
+```
+And import:
+```ts
+import fetchify from "@vseplet/fetchify";
+```
 
 ## Usage:
 
@@ -145,7 +130,7 @@ If you need to, you can try to parse JSON and validate it using
 [Zod](https://github.com/colinhacks/zod):
 
 ```ts
-import fetchify, { jsonZ, z } from "fetchify";
+import fetchify, { jsonZ, z } from "@vseplet/fetchify";
 
 const schema = z.object({
   id: z.string(), // there should actually be a z.number() here!
@@ -179,7 +164,7 @@ error: Uncaught (in promise) ZodError: [
 Or using [ValiBot](https://github.com/fabian-hiller/valibot):
 
 ```ts
-import fetchify, { jsonV, v } from "fetchify";
+import fetchify, { jsonV, v } from "@vseplet/fetchify";
 
 const schema = v.object({
   id: v.number(), // v.number() is valid
@@ -212,7 +197,3 @@ console.log(data);
 `bc1qq37svf4h8sg5qjsv99n9jf3r45dtd5yf5mdpc5`<br> **ETH**:
 `0xAdc58F26cA3dCc01256cF1BeF6221f4bcaa3c660`<br> **SOL**:
 `BckFFoxZw36ABbNS8Fc66LCdzJhu4ZwQANRdq49XmqKw`<br>
-
-## LICENCE
-
-[LGPL-2.1](https://github.com/sevapp/fetchify/blob/main/LICENSE)
