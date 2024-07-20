@@ -1,4 +1,3 @@
-import { delay } from "../deps.ts";
 import fetchify from "../mod.ts";
 
 const api = fetchify.create({

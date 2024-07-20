@@ -10,9 +10,9 @@ const api = fetchify.create({
     },
   },
 
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL: "https://jsonplaceholder.typicode.com/posts",
 });
 
-const res = await api.get("postsds/1", { attempts: 10 });
+const res = await api.get("/1", { attempts: 10 });
 
 console.log(res);

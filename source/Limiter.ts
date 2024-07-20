@@ -87,7 +87,7 @@ export class Limiter {
 
       if (entity) {
         this.#requestsPerIteration++;
-        console.log(entity.input.toString());
+        // console.log(entity.input.toString());
         if (entity.init?.timeout && entity.init?.timeout > 0) {
           fetchWithTimeout(entity.input, entity.init.timeout, entity.init)
             .then((response) => this.#fetchThen(entity, response))

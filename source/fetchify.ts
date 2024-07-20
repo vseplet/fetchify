@@ -22,7 +22,7 @@ export class Fetchify {
   #request(method: string, input: FetchInput, init?: ILimiterRequestInit) {
     return this.#limiter.fetch(
       this.#config.baseURL
-        ? combineURL(input, this.#config.baseURL)
+        ? combineURL(this.#config.baseURL, input)
         : getUrlFromStringOrRequest(input),
       {
         method,

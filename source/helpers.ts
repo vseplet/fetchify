@@ -9,6 +9,7 @@ export const objectToQueryParams = (params: IQueryParams): string => {
 };
 
 export const getUrlFromStringOrRequest = (input: FetchInput): string => {
+  let url = "";
   if (input instanceof URL) {
     return input.toString();
   } else if (input instanceof Request) {
@@ -23,11 +24,11 @@ export const combineURL = (
   path: FetchInput,
   params?: IQueryParams,
 ): URL => {
-  const url = new URL(
-    getUrlFromStringOrRequest(baseURL),
-    getUrlFromStringOrRequest(path),
-  );
-
+  let part1 = getUrlFromStringOrRequest(baseURL);
+  let part2 = getUrlFromStringOrRequest(path);
+  if (!part1.endsWith("/")) part1 += "/";
+  if (part2.startsWith("/")) part2 = part2.slice(1);
+  const url = new URL(part1 + part2);
   if (params) url.search = objectToQueryParams(params);
 
   return url;
