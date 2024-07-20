@@ -1,4 +1,5 @@
 # fetchify
+
 [![JSR](https://jsr.io/badges/@vseplet/fetchify)](https://jsr.io/@vseplet/fetchify)
 
 ✅ [DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
@@ -11,8 +12,8 @@ could be APIs like Notion or Telegram, which have stringent limits.
   - [👋 👋 ATTENTION!](#--attention)
   - [Examples](#examples)
   - [Import](#import)
-      - [Deno:](#deno)
-      - [Node.JS:](#nodejs)
+    - [Deno:](#deno)
+    - [Node.JS:](#nodejs)
   - [Usage:](#usage)
     - [Timeout](#timeout)
     - [Rate-limit](#rate-limit)
@@ -36,14 +37,19 @@ could be APIs like Notion or Telegram, which have stringent limits.
 ## Import
 
 #### Deno:
+
 ```bash
 deno add @vseplet/fetchify
 ```
+
 #### Node.JS:
+
 ```bash
 npx jsr add @vseplet/fetchify
 ```
+
 And import:
+
 ```ts
 import fetchify from "@vseplet/fetchify";
 ```

@@ -163,7 +163,7 @@ export class Limiter {
   }
 
   fetch(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
-    return init && init.unlimited === true
+    return (init && init.unlimited === true) || this.#options?.unlimited
       ? Limiter.fetch(input, init)
       : this.#limitedFetch(input, init);
   }

@@ -2,6 +2,7 @@ import fetchify from "../mod.ts";
 
 const api = fetchify.create({
   limiter: {
+    unlimited: true,
     rps: 1,
     status: {
       404: (response, resolve, reject, retry) => {
