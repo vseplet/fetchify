@@ -1,11 +1,5 @@
 # fetchify
-
-[![deno.land/x/luminous](https://shield.deno.dev/x/fetchify)](https://deno.land/x/fetchify)
-[![popularity](https://deno.land/badge/fetchify/popularity)](https://deno.land/x/fetchify)
-![npm version](https://img.shields.io/npm/v/@sevapp/fetchify)
-![npm downloads](https://img.shields.io/npm/dt/@sevapp/fetchify)
-![npm license](https://img.shields.io/npm/l/@sevapp/fetchify)
-
+[![JSR](https://jsr.io/badges/@vseplet/fetchify)](https://jsr.io/@vseplet/fetchify)
 ✅ [DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
 
 This package is designed to make the process of interacting with various APIs
@@ -16,8 +10,8 @@ could be APIs like Notion or Telegram, which have stringent limits.
   - [👋 👋 ATTENTION!](#--attention)
   - [Examples](#examples)
   - [Import](#import)
-    - [Deno:](#deno)
-    - [Node.JS:](#nodejs)
+      - [Deno:](#deno)
+      - [Node.JS:](#nodejs)
   - [Usage:](#usage)
     - [Timeout](#timeout)
     - [Rate-limit](#rate-limit)
