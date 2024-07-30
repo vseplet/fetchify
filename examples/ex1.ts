@@ -1,5 +1,5 @@
 import { delay } from "https://deno.land/std@0.202.0/async/delay.ts";
-import { Limiter } from "../mod.ts";
+import { Limiter } from "../source/mod.ts";
 
 const endpoint = "https://jsonplaceholder.typicode.com/asdasd/1";
 

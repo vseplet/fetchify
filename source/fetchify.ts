@@ -1,14 +1,10 @@
-import { Limiter } from "../mod.ts";
+import { Limiter } from "./mod.ts";
 import { combineURL, getUrlFromStringOrRequest } from "./helpers.ts";
-import { FetchInput, IFetchifyConfig, ILimiterRequestInit } from "./types.ts";
-
-export const fetchify = (input: FetchInput, init?: ILimiterRequestInit) => {
-  return Limiter.fetch(input, init);
-};
-
-fetchify.create = (options?: IFetchifyConfig) => {
-  return new Fetchify(options);
-};
+import type {
+  FetchInput,
+  IFetchifyConfig,
+  ILimiterRequestInit,
+} from "./types.ts";
 
 export class Fetchify {
   #config: IFetchifyConfig = {};

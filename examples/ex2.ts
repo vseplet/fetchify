@@ -1,4 +1,4 @@
-import fetchify from "../mod.ts";
+import fetchify from "../source/mod.ts";
 
 const api = fetchify.create({
   limiter: {

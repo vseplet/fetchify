@@ -1,4 +1,4 @@
-import fetchify, { jsonZ, z } from "../mod.ts";
+import fetchify, { jsonZ, z } from "../source/mod.ts";
 
 const schema = z.object({
   id: z.number(),

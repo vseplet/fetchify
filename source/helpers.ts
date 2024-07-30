@@ -1,4 +1,4 @@
-import { FetchInput, IQueryParams } from "./types.ts";
+import type { FetchInput, IQueryParams } from "./types.ts";
 
 export const objectToQueryParams = (params: IQueryParams): string => {
   return Object.entries(params)

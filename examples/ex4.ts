@@ -1,4 +1,4 @@
-import fetchify, { jsonV, v } from "../mod.ts";
+import fetchify, { jsonV, v } from "../source/mod.ts";
 
 const schema = v.object({
   id: v.number(), // v.number() is valid
