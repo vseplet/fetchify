@@ -1,4 +1,4 @@
-import { FetchInput, ILimiterRequestInit } from "./types.ts";
+import type { FetchInput, ILimiterRequestInit } from "./types.ts";
 
 export function fetchWithTimeout(
   input: FetchInput,

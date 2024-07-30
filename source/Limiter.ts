@@ -1,7 +1,7 @@
 import { delay } from "../deps.ts";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
 import { getUrlFromStringOrRequest, objectToQueryParams } from "./helpers.ts";
-import {
+import type {
   FetchInput,
   ILimiterOptions,
   ILimiterRequestInit,

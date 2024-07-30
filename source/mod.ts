@@ -1,5 +1,5 @@
 import { v, z } from "../deps.ts";
-import { Fetchify } from "./Fetchify.ts";
+import { Fetchify } from "./Fetch.ts";
 import { Limiter } from "./Limiter.ts";
 import type {
   FetchInput,

@@ -9,7 +9,7 @@
   "exports": {
     ".": "./source/mod.ts",
     "./types": "./source/types.ts",
-    "./Fetchify": "./source/Fetchify.ts",
+    "./Fetchify": "./source/Fetch.ts",
     "./Limiter": "./source/Limiter.ts"
   },
   "lock": false,
