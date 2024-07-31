@@ -1,6 +1,6 @@
 {
   "name": "@vseplet/fetchify",
-  "version": "0.3.19",
+  "version": "0.3.20",
   "workflows": {
     "UpdateSemverDeployJsr": {
       "versionsFilePath": "./source/versions.ts"
@@ -20,6 +20,8 @@
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {
-    "exclude": ["./source/versions.ts"]
+    "exclude": [
+      "./source/versions.ts"
+    ]
   }
 }
