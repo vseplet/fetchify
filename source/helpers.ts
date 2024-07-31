@@ -28,8 +28,9 @@ export const combineURL = (
   let part2 = getUrlFromStringOrRequest(path);
   if (!part1.endsWith("/")) part1 += "/";
   if (part2.startsWith("/")) part2 = part2.slice(1);
-  const url = new URL(part1 + part2);
+  let newBareURL = part1 + part2;
+  if (newBareURL.endsWith("/")) newBareURL = newBareURL.slice(0, -1); // Удаление завершающего "/"
+  const url = new URL(newBareURL);
   if (params) url.search = objectToQueryParams(params);
-
   return url;
 };

@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-unused-vars
 import { delay } from "../deps.ts";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
 import { getUrlFromStringOrRequest, objectToQueryParams } from "./helpers.ts";
@@ -78,7 +79,7 @@ export class Limiter {
         this.#timeoutAfter429 = 0;
       }
 
-      if (this.#requestsPerIteration >= this.#options.rps) {
+      if (this.#requestsPerIteration >= (this.#options?.rps || 1)) {
         await delay(0);
         continue;
       }

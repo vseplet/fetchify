@@ -16,6 +16,10 @@
   "tasks": {
     "ex2": "deno run -A ./examples/ex2.ts",
     "ex5": "deno run -A ./examples/ex5.ts",
+    "ex6": "deno run -A ./examples/ex5.ts",
     "pub-dry": "deno publish --dry-run --allow-slow-types"
+  },
+  "fmt": {
+    "exclude": ["./source/versions.ts"]
   }
 }

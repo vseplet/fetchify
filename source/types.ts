@@ -34,7 +34,7 @@ export type StatusHandler = (
 
 export interface ILimiterOptions {
   unlimited?: boolean;
-  rps: number; // requests per second
+  rps?: number; // requests per second
   rt?: RateLimitExceededHandler;
   status?: {
     [code: number]: StatusHandler;
