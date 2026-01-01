@@ -1,6 +1,6 @@
 {
   "name": "@vseplet/fetchify",
-  "version": "0.3.21",
+  "version": "0.3.22",
   "workflows": {
     "UpdateSemverDeployJsr": {
       "versionsFilePath": "./source/versions.ts"
@@ -47,6 +47,8 @@
     }
   },
   "test": {
-    "include": ["tests/"]
+    "include": [
+      "tests/"
+    ]
   }
 }
