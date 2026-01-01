@@ -1,5 +1,5 @@
 import { assertEquals, assertRejects } from "@std/assert";
-import { fetchWithTimeout } from "./fetchWithTimeout.ts";
+import { fetchWithTimeout } from "@/fetchWithTimeout.ts";
 
 Deno.test("fetchWithTimeout - successful request within timeout", async () => {
   const originalFetch = globalThis.fetch;

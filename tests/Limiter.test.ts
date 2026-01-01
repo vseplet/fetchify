@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { Limiter } from "./Limiter.ts";
+import { Limiter } from "@/Limiter.ts";
 
 function mockFetch(response: Response = new Response("", { status: 200 })) {
   const originalFetch = globalThis.fetch;
