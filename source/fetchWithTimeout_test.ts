@@ -1,14 +1,13 @@
-import {
-  assertEquals,
-  assertRejects,
-} from "jsr:@std/assert@1";
+import { assertEquals, assertRejects } from "@std/assert";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
 
 Deno.test("fetchWithTimeout - successful request within timeout", async () => {
   const originalFetch = globalThis.fetch;
 
   globalThis.fetch = () =>
-    Promise.resolve(new Response(JSON.stringify({ success: true }), { status: 200 }));
+    Promise.resolve(
+      new Response(JSON.stringify({ success: true }), { status: 200 }),
+    );
 
   try {
     const response = await fetchWithTimeout("https://example.com", 5000);

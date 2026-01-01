@@ -1,4 +1,4 @@
-import { assertEquals, assertRejects } from "jsr:@std/assert@1";
+import { assertEquals, assertRejects } from "@std/assert";
 import { v, z } from "../deps.ts";
 import { json, jsonV, jsonZ, text } from "./parsers.ts";
 

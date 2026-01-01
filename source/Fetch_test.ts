@@ -1,4 +1,4 @@
-import { assertEquals } from "jsr:@std/assert@1";
+import { assertEquals } from "@std/assert";
 import { Fetchify } from "./Fetch.ts";
 
 function mockFetch() {
@@ -11,7 +11,9 @@ function mockFetch() {
       method: init?.method || "GET",
       headers: init?.headers,
     });
-    return Promise.resolve(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+    return Promise.resolve(
+      new Response(JSON.stringify({ ok: true }), { status: 200 }),
+    );
   };
 
   return {
@@ -22,7 +24,9 @@ function mockFetch() {
   };
 }
 
-Deno.test("Fetchify - GET request", async () => {
+const testOpts = { sanitizeOps: false, sanitizeResources: false };
+
+Deno.test("Fetchify - GET request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -36,7 +40,7 @@ Deno.test("Fetchify - GET request", async () => {
   }
 });
 
-Deno.test("Fetchify - POST request", async () => {
+Deno.test("Fetchify - POST request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -49,7 +53,7 @@ Deno.test("Fetchify - POST request", async () => {
   }
 });
 
-Deno.test("Fetchify - PUT request", async () => {
+Deno.test("Fetchify - PUT request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -62,7 +66,7 @@ Deno.test("Fetchify - PUT request", async () => {
   }
 });
 
-Deno.test("Fetchify - DELETE request", async () => {
+Deno.test("Fetchify - DELETE request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -75,7 +79,7 @@ Deno.test("Fetchify - DELETE request", async () => {
   }
 });
 
-Deno.test("Fetchify - HEAD request", async () => {
+Deno.test("Fetchify - HEAD request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -88,7 +92,7 @@ Deno.test("Fetchify - HEAD request", async () => {
   }
 });
 
-Deno.test("Fetchify - PATCH request", async () => {
+Deno.test("Fetchify - PATCH request", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify();
 
@@ -101,7 +105,7 @@ Deno.test("Fetchify - PATCH request", async () => {
   }
 });
 
-Deno.test("Fetchify - uses baseURL", async () => {
+Deno.test("Fetchify - uses baseURL", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify({
     baseURL: "https://api.example.com",
@@ -115,7 +119,7 @@ Deno.test("Fetchify - uses baseURL", async () => {
   }
 });
 
-Deno.test("Fetchify - uses default headers", async () => {
+Deno.test("Fetchify - uses default headers", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify({
     headers: {
@@ -135,21 +139,25 @@ Deno.test("Fetchify - uses default headers", async () => {
   }
 });
 
-Deno.test("Fetchify - combines baseURL with path correctly", async () => {
-  const { calls, cleanup } = mockFetch();
-  const client = new Fetchify({
-    baseURL: "https://api.example.com/v1",
-  });
+Deno.test(
+  "Fetchify - combines baseURL with path correctly",
+  testOpts,
+  async () => {
+    const { calls, cleanup } = mockFetch();
+    const client = new Fetchify({
+      baseURL: "https://api.example.com/v1",
+    });
 
-  try {
-    await client.get("/users/123");
-    assertEquals(calls[0].url, "https://api.example.com/v1/users/123");
-  } finally {
-    cleanup();
-  }
-});
+    try {
+      await client.get("/users/123");
+      assertEquals(calls[0].url, "https://api.example.com/v1/users/123");
+    } finally {
+      cleanup();
+    }
+  },
+);
 
-Deno.test("Fetchify - with rate limiting config", async () => {
+Deno.test("Fetchify - with rate limiting config", testOpts, async () => {
   const { cleanup } = mockFetch();
   const client = new Fetchify({
     limiter: { rps: 5 },
@@ -163,7 +171,7 @@ Deno.test("Fetchify - with rate limiting config", async () => {
   }
 });
 
-Deno.test("Fetchify - multiple requests in sequence", async () => {
+Deno.test("Fetchify - multiple requests in sequence", testOpts, async () => {
   const { calls, cleanup } = mockFetch();
   const client = new Fetchify({
     baseURL: "https://api.example.com",

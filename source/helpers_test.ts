@@ -1,4 +1,4 @@
-import { assertEquals } from "jsr:@std/assert@1";
+import { assertEquals } from "@std/assert";
 import {
   combineURL,
   getUrlFromStringOrRequest,
@@ -59,7 +59,10 @@ Deno.test("combineURL - adds query parameters", () => {
     page: 1,
     limit: 10,
   });
-  assertEquals(result.toString(), "https://example.com/api/users?page=1&limit=10");
+  assertEquals(
+    result.toString(),
+    "https://example.com/api/users?page=1&limit=10",
+  );
 });
 
 Deno.test("combineURL - removes trailing slash from result", () => {

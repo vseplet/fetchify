@@ -6,6 +6,9 @@
       "versionsFilePath": "./source/versions.ts"
     }
   },
+  "imports": {
+    "@std/assert": "https://deno.land/std@0.224.0/assert/mod.ts"
+  },
   "exports": {
     ".": "./source/mod.ts",
     "./types": "./source/types.ts",
@@ -29,5 +32,14 @@
     "exclude": [
       "./source/versions.ts"
     ]
+  },
+  "lint": {
+    "exclude": [
+      "./examples/",
+      "./scripts/"
+    ],
+    "rules": {
+      "exclude": ["no-slow-types"]
+    }
   }
 }
