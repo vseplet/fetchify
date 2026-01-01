@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { Fetchify } from "./Fetch.ts";
+import { Fetchify } from "@/Fetch.ts";
 
 function mockFetch() {
   const originalFetch = globalThis.fetch;
