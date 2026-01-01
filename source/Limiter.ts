@@ -1,3 +1,10 @@
+/**
+ * @module
+ *
+ * Rate limiting functionality for HTTP requests.
+ * Provides the Limiter class for managing request queues and rate limits.
+ */
+
 // deno-lint-ignore-file no-unused-vars
 import { delay } from "../deps.ts";
 import { fetchWithTimeout } from "./fetchWithTimeout.ts";
@@ -9,6 +16,16 @@ import type {
   IRequestEntity,
 } from "./types.ts";
 
+/**
+ * Rate limiter class for managing HTTP request queues.
+ * Implements request-per-second limiting and retry logic.
+ *
+ * @example
+ * ```ts
+ * const limiter = new Limiter({ rps: 5 });
+ * await limiter.fetch("https://api.example.com");
+ * ```
+ */
 export class Limiter {
   #options: ILimiterOptions = {
     rps: 1,
@@ -121,6 +138,21 @@ export class Limiter {
     }
   }
 
+  /**
+   * Static method for making unlimited (non-rate-limited) fetch requests.
+   *
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   *
+   * @example
+   * ```ts
+   * const response = await Limiter.fetch("https://api.example.com", {
+   *   timeout: 5000,
+   *   params: { page: 1 }
+   * });
+   * ```
+   */
   static fetch(
     input: FetchInput,
     init?: ILimiterRequestInit,
@@ -163,6 +195,20 @@ export class Limiter {
     return promise;
   }
 
+  /**
+   * Makes a fetch request with rate limiting (unless unlimited option is set).
+   *
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   *
+   * @example
+   * ```ts
+   * const limiter = new Limiter({ rps: 5 });
+   * await limiter.fetch("https://api.example.com");
+   * await limiter.fetch("https://api.example.com", { unlimited: true });
+   * ```
+   */
   fetch(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return (init && init.unlimited === true) || this.#options?.unlimited
       ? Limiter.fetch(input, init)

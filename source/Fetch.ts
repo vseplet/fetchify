@@ -1,3 +1,10 @@
+/**
+ * @module
+ *
+ * Fetchify class providing HTTP methods with rate limiting and request configuration.
+ * This module exports the main Fetchify class for creating configured HTTP clients.
+ */
+
 import { Limiter } from "./mod.ts";
 import { combineURL, getUrlFromStringOrRequest } from "./helpers.ts";
 import type {
@@ -6,6 +13,18 @@ import type {
   ILimiterRequestInit,
 } from "./types.ts";
 
+/**
+ * Fetchify class for making HTTP requests with rate limiting and configuration.
+ *
+ * @example
+ * ```ts
+ * const api = new Fetchify({
+ *   baseURL: "https://api.example.com",
+ *   limiter: { rps: 5 }
+ * });
+ * await api.get("/users");
+ * ```
+ */
 export class Fetchify {
   #config: IFetchifyConfig = {};
   #limiter: Limiter;
@@ -28,27 +47,63 @@ export class Fetchify {
     );
   }
 
-  get(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a GET request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  get(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("GET", input, init);
   }
 
-  post(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a POST request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  post(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("POST", input, init);
   }
 
-  put(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a PUT request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  put(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("PUT", input, init);
   }
 
-  delete(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a DELETE request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  delete(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("DELETE", input, init);
   }
 
-  head(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a HEAD request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  head(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("HEAD", input, init);
   }
 
-  patch(input: FetchInput, init?: ILimiterRequestInit) {
+  /**
+   * Performs a PATCH request.
+   * @param input - The URL or Request object
+   * @param init - Optional request configuration
+   * @returns Promise resolving to Response
+   */
+  patch(input: FetchInput, init?: ILimiterRequestInit): Promise<Response> {
     return this.#request("PATCH", input, init);
   }
 }
