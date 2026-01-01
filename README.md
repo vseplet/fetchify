@@ -1,14 +1,12 @@
 # fetchify
 
+Enhanced fetch wrapper with rate limiting, retries, and validation for Deno.
+
 [![JSR](https://jsr.io/badges/@vseplet/fetchify)](https://jsr.io/@vseplet/fetchify)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/vseplet/fetchify)](https://github.com/vseplet/fetchify/pulse)
+[![GitHub last commit](https://img.shields.io/github/last-commit/vseplet/fetchify)](https://github.com/vseplet/fetchify/commits/main)
 
-## 👋 👋 ATTENTION!
-
-> This package is under development and will be frequently updated. The author
-> would appreciate any help, advice, and pull requests! Thank you for your
-> understanding 😊
-
-✅ [DENO RU COMMUNITY](https://t.me/+3rL7e9JzPLRhZTli)
+> **Note:** This package is under active development. Contributions, feedback, and pull requests are welcome!
 
 This package is designed to make the process of interacting with various APIs
 that have strict limitations more convenient and careful. For example, this
@@ -426,6 +424,10 @@ const { data, response } = await jsonV(
 
 console.log(data.id); // type-safe access
 ```
+
+## License
+
+[MIT](./LICENSE)
 
 ## TypeScript Types
 
