@@ -3,7 +3,7 @@ import {
   combineURL,
   getUrlFromStringOrRequest,
   objectToQueryParams,
-} from "./helpers.ts";
+} from "@/helpers.ts";
 
 Deno.test("objectToQueryParams - converts object to query string", () => {
   const params = { foo: "bar", baz: 123, active: true };

@@ -1,6 +1,6 @@
 import { assertEquals, assertRejects } from "@std/assert";
-import { v, z } from "../deps.ts";
-import { json, jsonV, jsonZ, text } from "./parsers.ts";
+import { v, z } from "#deps";
+import { json, jsonV, jsonZ, text } from "@/parsers.ts";
 
 Deno.test("text - parses response as text", async () => {
   const mockResponse = new Response("Hello, World!", { status: 200 });
