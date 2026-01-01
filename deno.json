@@ -6,6 +6,9 @@
       "versionsFilePath": "./source/versions.ts"
     }
   },
+  "imports": {
+    "@std/assert": "https://deno.land/std@0.224.0/assert/mod.ts"
+  },
   "exports": {
     ".": "./source/mod.ts",
     "./types": "./source/types.ts",
@@ -14,6 +17,12 @@
   },
   "lock": false,
   "tasks": {
+    "test": "deno test --allow-net source/",
+    "test:coverage": "deno test --allow-net --coverage=coverage source/",
+    "lint": "deno lint",
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "check": "deno check source/mod.ts",
     "ex2": "deno run -A ./examples/ex2.ts",
     "ex5": "deno run -A ./examples/ex5.ts",
     "ex6": "deno run -A ./examples/ex5.ts",
@@ -23,5 +32,14 @@
     "exclude": [
       "./source/versions.ts"
     ]
+  },
+  "lint": {
+    "exclude": [
+      "./examples/",
+      "./scripts/"
+    ],
+    "rules": {
+      "exclude": ["no-slow-types"]
+    }
   }
 }

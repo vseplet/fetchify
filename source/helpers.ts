@@ -9,7 +9,6 @@ export const objectToQueryParams = (params: IQueryParams): string => {
 };
 
 export const getUrlFromStringOrRequest = (input: FetchInput): string => {
-  let url = "";
   if (input instanceof URL) {
     return input.toString();
   } else if (input instanceof Request) {
