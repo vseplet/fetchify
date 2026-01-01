@@ -7,7 +7,7 @@ export const text = async (promise: Promise<Response>) => {
   return { data, response };
 };
 
-export const json = async <T>(promise: Promise<Response>, schema?: T) => {
+export const json = async <T>(promise: Promise<Response>, _schema?: T) => {
   const response = await promise;
   const data = await response.json() as T;
 
